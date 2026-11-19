@@ -1,0 +1,103 @@
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-16);
+  margin-bottom: var(--space-16);
+}
+
+.title {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.subtitle {
+  margin-top: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-16);
+  margin-bottom: var(--space-16);
+}
+
+/* Same track width as the catalog: at this level a design IS an image, so it
+   gets the shape the catalog already established. */
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: var(--space-16);
+  list-style: none;
+}
+
+/* Anchor for the floating menu. No border and no raised surface: image
+   surface. */
+.card {
+  position: relative;
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  text-decoration: none;
+  color: inherit;
+}
+
+/* The image frame is components/ui/Thumbnail, including the dashed variant a
+   design with no garment gets. */
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.metaTop {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-8);
+}
+
+.name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.sub {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--text-xs);
+  font-stretch: var(--font-stretch-condensed);
+  color: var(--color-text-secondary);
+}
+
+/* Quieter than the rest of the metadata: it answers "did I touch this
+   recently", which is a question you ask of the whole list at once, not of one
+   card. */
+.when {
+  font-size: var(--text-xs);
+  font-stretch: var(--font-stretch-condensed);
+  color: var(--color-text-disabled);
+}
+
+.menu {
+  position: absolute;
+  top: var(--space-8);
+  right: var(--space-8);
+  z-index: 5;
+}
+
+/* The empty state comes from components/ui/EmptyState. */

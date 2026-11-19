@@ -1,0 +1,110 @@
+/* The sidebar's trigger spans the rail; a section header's sits inline. */
+/* The picker step shows a thumbnail grid; the form-sized default is too narrow. */
+.dialogWide {
+  width: min(48rem, calc(100vw - 2rem));
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  padding: var(--space-20);
+}
+
+.title {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.stepLabel {
+  margin-top: calc(var(--space-8) * -1);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.row {
+  display: flex;
+  gap: var(--space-12);
+}
+
+.row > .field {
+  flex: 1;
+  min-width: 0;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.label {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.optional {
+  font-weight: 400;
+  color: var(--color-text-secondary);
+}
+
+.input,
+.textarea {
+  padding: 0 var(--space-12);
+  font-size: var(--text-base);
+  font-family: inherit;
+  color: var(--color-text-primary);
+  background: var(--color-surface-sunken);
+  border: var(--border-hairline) solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+}
+
+.input {
+  min-height: 2.75rem;
+}
+
+.textarea {
+  padding: var(--space-10) var(--space-12);
+  resize: vertical;
+}
+
+.hint {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+/* Holds the picker's height while its images are on the way, so the dialog
+   does not resize under the pointer once they land. */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 18rem;
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  background: var(--color-surface-sunken);
+  border: var(--border-hairline) solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-8);
+  margin-top: var(--space-4);
+}
+
+.actions.spread {
+  justify-content: space-between;
+}
+
+.error {
+  padding: var(--space-10) var(--space-12);
+  font-size: var(--text-sm);
+  color: var(--color-danger);
+  background: var(--color-danger-subtle);
+  border: var(--border-hairline) solid var(--color-danger);
+  border-radius: var(--radius-sm);
+}

@@ -1,0 +1,99 @@
+/*
+ * Login screen. Scoped to this component only.
+ * Every value comes from a token in globals.css — no literal colors here, so a
+ * change to the design tokens never reaches this file.
+ */
+
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: var(--space-16);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  width: 100%;
+  max-width: 22rem;
+  padding: var(--space-24);
+  background: var(--color-surface-raised);
+  border: var(--border-hairline) solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.title {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.subtitle {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.label {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.input {
+  /* 44px minimum touch target on mobile. */
+  min-height: 2.75rem;
+  padding: 0 var(--space-12);
+  font-size: var(--text-base);
+  font-family: inherit;
+  color: var(--color-text-primary);
+  background: var(--color-surface-sunken);
+  border: var(--border-hairline) solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+}
+
+.input::placeholder {
+  color: var(--color-text-disabled);
+}
+
+.input:disabled {
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+}
+
+/*
+ * The only primary action on this screen. It used to be a hand-written copy of
+ * Button's primary variant — the fourth case of the same duplication.
+ * Now it is the primitive, and this rule only says what is
+ * different here: full width, and taller because a login button on a phone is
+ * the one control on screen.
+ */
+.submit {
+  width: 100%;
+  min-height: 2.75rem;
+  margin-top: var(--space-4);
+  font-size: var(--text-base);
+}
+
+.error {
+  padding: var(--space-10) var(--space-12);
+  font-size: var(--text-sm);
+  color: var(--color-danger);
+  background: var(--color-danger-subtle);
+  border: var(--border-hairline) solid var(--color-danger);
+  border-radius: var(--radius-sm);
+}

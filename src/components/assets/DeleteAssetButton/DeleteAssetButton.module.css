@@ -1,0 +1,75 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  padding: var(--space-20);
+}
+
+.title {
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.warning {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-8);
+  margin-top: var(--space-4);
+}
+
+.error {
+  padding: var(--space-10) var(--space-12);
+  font-size: var(--text-sm);
+  color: var(--color-danger);
+  background: var(--color-danger-subtle);
+  border: var(--border-hairline) solid var(--color-danger);
+  border-radius: var(--radius-sm);
+}
+
+.checking {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+/* Warning tone, not danger: the deletion is allowed, this only says what it
+   costs. Danger colouring here would read as "blocked". */
+.usage {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding: var(--space-12);
+  background: var(--color-surface-sunken);
+  border-left: 2px solid var(--color-warning);
+  border-radius: var(--radius-sm);
+}
+
+.usageTitle {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.usageList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  max-height: 9rem;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.usageItem {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.usageHint {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}

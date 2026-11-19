@@ -1,0 +1,92 @@
+.container {
+  position: fixed;
+  /* Clears the notch and the status bar on a phone; falls back to plain 1rem
+     everywhere else, because env() resolves to 0 when there is no inset. */
+  top: calc(1rem + env(safe-area-inset-top));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  width: min(28rem, calc(100vw - 2rem));
+  /* The stack does not block clicks; each toast re-enables them for itself. */
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-12);
+  padding: var(--space-12) var(--space-14);
+  background: var(--color-surface-raised);
+  border: var(--border-hairline) solid var(--color-border-subtle);
+  border-left-width: 3px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  pointer-events: auto;
+  animation: toast-in var(--duration-enter) var(--ease-out);
+}
+
+/* The colored left edge carries the meaning; the surface stays neutral so the
+   text keeps full contrast. */
+.success {
+  border-left-color: var(--color-success);
+  background: var(--color-success-subtle);
+}
+
+.error {
+  border-left-color: var(--color-danger);
+  background: var(--color-danger-subtle);
+}
+
+.message {
+  flex: 1;
+  font-size: var(--text-sm);
+  color: var(--color-text-primary);
+}
+
+.close {
+  position: relative;
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: calc(var(--space-2) * -1) calc(var(--space-4) * -1) calc(var(--space-2) * -1) 0;
+  font-size: 1.125rem;
+  line-height: 1;
+  color: var(--color-text-secondary);
+  background: transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.close:hover {
+  color: var(--color-text-primary);
+}
+
+/* The one control that cannot simply grow: its negative margins are cut to a
+   24px box, and widening it would push the message off its own line. So the
+   TARGET grows and the glyph does not — an invisible 44px pad centred on a
+   24px ×. The visual weight of a dismiss button stays where the design put it. */
+@media (pointer: coarse) {
+  .close::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: var(--touch-target);
+    height: var(--touch-target);
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

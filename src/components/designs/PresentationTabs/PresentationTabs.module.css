@@ -1,0 +1,143 @@
+/* Tabs on the left, the action on the right, sharing one rule underneath. */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-12);
+  margin-bottom: var(--space-16);
+  border-bottom: var(--border-hairline) solid var(--color-border-subtle);
+  padding-bottom: var(--space-8);
+}
+
+.tabs {
+  display: flex;
+  gap: var(--space-4);
+  margin-bottom: calc(var(--space-8) * -1);
+}
+
+.tab {
+  padding: var(--space-8) var(--space-14);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  font-family: inherit;
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  cursor: pointer;
+  transition: color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out);
+}
+
+.tab:hover {
+  color: var(--color-text-primary);
+}
+
+.tab[aria-selected="true"] {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
+
+/* 8px of padding around 14px of text is ~30px. These three sit shoulder to
+   shoulder, so a miss lands on the neighbour rather than on nothing. */
+@media (pointer: coarse) {
+  .tab {
+    min-height: var(--touch-target);
+  }
+}
+
+/* Keeps its height whatever the tab holds, so switching does not move the
+   page. Transparent by default: when the tab has no image, the empty state's
+   dashed box is the only frame, and two frames never stack. */
+.stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 24rem;
+  margin-bottom: var(--space-12);
+  border-radius: var(--radius-md);
+}
+
+/* Image surface: no border, because the garment brings its own. */
+.stageWithImage {
+  padding: var(--space-24);
+  background: var(--color-surface-sunken);
+}
+
+.stageImage {
+  max-width: 100%;
+  max-height: 60vh;
+  object-fit: contain;
+}
+
+.description {
+  margin-bottom: var(--space-24);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+/* Chooser for which composition is on stage. Thumbnails and not a <select>:
+   the same reason the starting-point picker is visual — three compositions of
+   the same shirt are told apart by looking, not by their timestamp. */
+.picker {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  margin-bottom: var(--space-16);
+}
+
+.pickerLabel {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.pickerRow {
+  display: flex;
+  gap: var(--space-8);
+  overflow-x: auto;
+  padding-bottom: var(--space-4);
+}
+
+.pickerItem {
+  flex: 0 0 4.5rem;
+  aspect-ratio: 1;
+  padding: 0;
+  background: var(--color-surface-sunken);
+  border: var(--border-hairline) solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.pickerItem:hover {
+  border-color: var(--color-border-strong);
+}
+
+.pickerItem[aria-pressed="true"] {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 1px var(--color-accent);
+}
+
+.pickerThumb {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Warning tone, not danger: what is on screen is real, it is simply older than
+   the garment it was flattened from. */
+.outdated {
+  padding: var(--space-10) var(--space-12);
+  font-size: var(--text-sm);
+  line-height: 1.45;
+  color: var(--color-text-secondary);
+  background: var(--color-surface-sunken);
+  border-left: 2px solid var(--color-warning);
+  border-radius: var(--radius-sm);
+}
