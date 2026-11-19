@@ -1,0 +1,22 @@
+# Dependencias y compilados
+node_modules/
+.next/
+out/
+build/
+*.tsbuildinfo
+
+# Variables de entorno: nunca se suben. Solo la plantilla.
+.env
+.env.*
+!.env.example
+
+# Despliegue, editor y sistema
+.vercel/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Python (src/herramientas/)
+__pycache__/
+*.pyc

@@ -1,0 +1,37 @@
+.badge {
+  display: inline-block;
+  padding: var(--space-2) var(--space-8);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  /* Narrow, not small: a badge is dense metadata, and the width axis is what
+     buys the room back without dropping below the smallest readable size. */
+  font-stretch: var(--font-stretch-condensed);
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+
+/* Not started yet. */
+.neutral {
+  color: var(--color-text-secondary);
+  background: var(--color-surface-sunken);
+}
+
+/* Under way. */
+.success {
+  color: var(--color-success);
+  background: var(--color-success-subtle);
+}
+
+/* Finished or archived — deliberately quiet, it needs no attention. */
+.muted {
+  color: var(--color-text-disabled);
+  background: var(--color-surface-sunken);
+}
+
+/* "This one is you." Not a status: it points at a row in a list of people.
+   Was hand-rolled identically in UserRow and MembersSection until it moved
+   here (a style needed in two components gets extracted). */
+.accent {
+  color: var(--color-accent);
+  background: var(--color-accent-subtle);
+}

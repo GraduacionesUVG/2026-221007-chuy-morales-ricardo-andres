@@ -1,0 +1,93 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.label {
+  font-size: var(--text-sm);
+  font-stretch: var(--font-stretch-condensed);
+  color: var(--color-text-secondary);
+}
+
+.instruction {
+  padding: var(--space-8) var(--space-10);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  line-height: 1.45;
+  color: var(--color-text-primary);
+  background: var(--color-surface-sunken);
+  border: var(--border-hairline) solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  resize: vertical;
+}
+
+.hint {
+  font-size: var(--text-xs);
+  line-height: 1.45;
+  color: var(--color-text-secondary);
+}
+
+/* Warning tone, not danger: the path works, it simply rewrites more than the
+   other one. Same treatment as the caveat in the mask panel. */
+.caution {
+  padding: var(--space-10) var(--space-12);
+  font-size: var(--text-xs);
+  line-height: 1.45;
+  color: var(--color-text-secondary);
+  background: var(--color-surface-sunken);
+  border-left: 2px solid var(--color-warning);
+  border-radius: var(--radius-sm);
+}
+
+.status {
+  font-size: var(--text-xs);
+  line-height: 1.45;
+  color: var(--color-text-secondary);
+}
+
+/* A state, not a decoration: it says no service is being called. */
+.pending {
+  font-weight: 600;
+  color: var(--color-warning);
+}
+
+/* Label and the suggestions trigger on one line: the trigger acts on the box
+   below, so it belongs to it and not to the panel. Same shape as the mask
+   panel, because it is the same gesture in a different mode. */
+.fieldHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-8);
+}
+
+/* A link and not a Button: it opens something to read, it does not act on the
+   design, and a second button here would compete with Generar for the eye. */
+.suggest {
+  padding: 0;
+  font-family: inherit;
+  font-size: var(--text-xs);
+  color: var(--color-accent);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.suggest:disabled {
+  color: var(--color-text-secondary);
+  cursor: default;
+}
+
+/* Says why the button is dead, in the flow rather than in a tooltip. */
+.blocked {
+  font-size: var(--text-xs);
+  line-height: 1.45;
+  color: var(--color-text-secondary);
+}

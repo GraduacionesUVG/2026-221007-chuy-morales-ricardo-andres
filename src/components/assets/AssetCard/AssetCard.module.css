@@ -1,0 +1,53 @@
+/* No border, no raised surface: this is an image, and an image brings its own
+   edge. The card frame was one of the 23 identical recipes that made a shirt
+   and a form look like the same kind of object. What
+   separates one asset from the next is now the grid gap. */
+.card {
+  position: relative;
+}
+
+/* Resets <button> chrome: this is the whole card's clickable "open preview"
+   area (thumbnail + filename), not a styled button. */
+.preview {
+  display: block;
+  width: 100%;
+  padding: 0;
+  font: inherit;
+  text-align: left;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* The frame, the skeleton and the fade live in components/ui/Thumbnail. The
+   menu stays a direct child of .card (which has no overflow:hidden) so its
+   dropdown is never cut off by the image. */
+.menu {
+  position: absolute;
+  top: var(--space-8);
+  right: var(--space-8);
+  z-index: 5;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-top: var(--space-6);
+}
+
+.filename {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-primary);
+}
+
+.size {
+  font-size: var(--text-xs);
+  font-stretch: var(--font-stretch-condensed);
+  color: var(--color-text-secondary);
+}

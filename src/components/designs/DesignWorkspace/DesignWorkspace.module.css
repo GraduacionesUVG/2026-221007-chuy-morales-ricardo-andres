@@ -1,0 +1,242 @@
+/* Canvas and rail, edge to edge. No gap and no page padding between them: the
+   working surface should reach the window, not float inside a card. */
+/* `nowrap`, and that single word is the whole fix.
+   A WRAPPING flex line takes its cross size from its tallest item, so the rail
+   — whose content is a colour picker plus a logo grid — was deciding how tall
+   the row had to be. The canvas box stretched to match, ended up taller than
+   the window, and centred the garment inside it: empty space above, cropped
+   below, and no scrollbar because the page itself was the right height all
+   along. The rail's `overflow-y: auto` never engaged either, since it was never
+   the one being constrained.
+   Without wrapping, the line is exactly as tall as this container, both
+   children stretch to it, and each scrolls or scales inside its own share. */
+.workspace {
+  display: flex;
+  flex-grow: 1;
+  flex-wrap: nowrap;
+  min-height: 0;
+}
+
+/* Below the wrap point the rail goes under the canvas, so the axis flips
+   instead of wrapping — same result, said explicitly. There the page scrolls
+   as a page (see the edit route's stylesheet). */
+@media (max-width: 48rem) {
+  .workspace {
+    flex-direction: column;
+  }
+}
+
+/* El riel de herramientas, que aparece y desaparece según el modo.
+ *
+ * Mismo procedimiento que la tira de pasos, girado: una rejilla de una columna
+ * que va de `1fr` a `0fr` anima el ancho real sin que nadie tenga que saber
+ * cuánto mide el riel. Antes desaparecía de golpe y el lienzo daba un salto
+ * lateral cada vez que se cambiaba de modo.
+ *
+ * Se detiene bajo prefers-reduced-motion por la regla global de globals.css.
+ */
+.railWrap {
+  display: grid;
+  grid-template-columns: 1fr;
+  /* Recorta el envoltorio, no solo al hijo. El riel mide 2.5rem fijos, así que
+     con la pista en `0fr` seguía dibujándose entero por fuera: quedaba una
+     tira de iconos a la vista. Los tooltips no se pierden porque son `title`
+     nativos y el navegador los dibuja fuera del documento. */
+  overflow: hidden;
+  /* `minmax(0, …)` y no `1fr` a secas, que es la diferencia entre plegarse y
+     encogerse. Una pista `fr` tiene un mínimo automático igual a su contenido,
+     así que con `0fr` la columna se quedaba del ancho mínimo de los botones:
+     el riel no desaparecía, se apretujaba. `minmax(0, …)` le quita ese piso. */
+  grid-template-columns: minmax(0, 1fr);
+  transition: grid-template-columns var(--duration-collapse) var(--ease-out);
+}
+
+.railCollapsed {
+  grid-template-columns: minmax(0, 0fr);
+}
+
+.railWrap > * {
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* Debajo del punto de quiebre el riel va bajo el lienzo, así que lo que hay
+   que animar es el alto y no el ancho. */
+@media (max-width: 48rem) {
+  .railWrap {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+    transition: grid-template-rows var(--duration-collapse) var(--ease-out);
+  }
+
+  .railCollapsed {
+    grid-template-rows: minmax(0, 0fr);
+  }
+
+  .railWrap > * {
+    min-height: 0;
+  }
+}
+
+/* Reserves the canvas height while the Konva chunk downloads, so the page does
+   not jump once it arrives. Used by DesignWorkspaceLoader — the SIBLING file,
+   which is why an audit that pairs each .tsx with its own stylesheet cannot
+   see it, and why one nearly deleted this rule. */
+.loadingBox {
+  flex-grow: 1;
+  height: 30rem;
+}
+
+/* The canvas column measures itself: the stage scale comes from this width. */
+/* Column, not row: the canvas fills what is left and the strip sits under it.
+   The strip is the chronology of the image above it, so it belongs to that
+   column and not to the tool rail. */
+.canvasColumn {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 24rem;
+  min-width: 0;
+  /* Lets the stage box shrink to the room it is given instead of holding the
+     column open at the garment's natural height. */
+  min-height: 0;
+}
+
+/* An image surface: no border, no radius. The garment draws its own edge, and
+   framing it like a data panel is what made every screen read the same. */
+/* `min-height: 0` and not the 30rem it had: with a definite page height the box
+   has to be able to SHRINK, or it keeps a floor taller than the window and the
+   garment runs off the bottom with nowhere to scroll. The stage scales itself
+   to whatever room this ends up with, so a short window makes a smaller
+   garment instead of a cropped one. The 30rem floor lives on in `.loadingBox`,
+   which is what it was really for: holding the space while Konva downloads. */
+.stageBox {
+  position: relative;
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  padding: var(--space-24);
+  background: var(--color-surface-sunken);
+}
+
+/* Wrapped layout: the rail sits under the canvas and the page scrolls as a
+   page, so here the canvas does need a floor or it collapses to nothing. */
+@media (max-width: 48rem) {
+  .stageBox {
+    min-height: 24rem;
+  }
+}
+
+.stageMessage {
+  padding: var(--space-32);
+  text-align: center;
+}
+
+.stageMessageTitle {
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.stageMessageHint {
+  margin-top: var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+/* One continuous piece, not a stack of cards. Four bordered boxes in a column
+   was the same recipe the rest of the app repeats, and it made the tools read
+   as four unrelated widgets instead of one instrument. */
+/* 20rem, not the 17rem it started at: the rail's job grew. It now holds a
+   colour picker and a two-button mode switch, and at 17rem those two buttons
+   wrapped one under the other.
+
+   `min-width: 0` is what makes the width DETERMINISTIC. Without it a flex item
+   cannot shrink below its content's min-content size, so a wide child silently
+   widened the rail — which is why the mode buttons sat side by side once the
+   picker appeared and stacked before it. The rail decides its own width; its
+   contents do not get a vote.
+
+   It scrolls on its own so a long rail never pushes the canvas down: the
+   garment stays put and only the tools move. */
+.panel {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 20rem;
+  min-width: 0;
+  /* Both are needed for the scroll to work: `min-height` so the rail may be
+     shorter than its contents, `overflow-y` so what is left over can be
+     reached. */
+  min-height: 0;
+  overflow-y: auto;
+  background: var(--color-surface-raised);
+  border-left: var(--border-hairline) solid var(--color-border-subtle);
+}
+
+/* Zones are separated by a hairline, the way a tool rail is divided. */
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding: var(--space-16) var(--space-20);
+  border-top: var(--border-hairline) solid var(--color-border-subtle);
+}
+
+.group:first-child {
+  border-top: none;
+}
+
+.groupLabel {
+  font-size: var(--text-xs);
+  font-stretch: var(--font-stretch-condensed);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.hint {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.status {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+.error {
+  padding: var(--space-10) var(--space-12);
+  font-size: var(--text-sm);
+  color: var(--color-danger);
+  background: var(--color-danger-subtle);
+  border: var(--border-hairline) solid var(--color-danger);
+  border-radius: var(--radius-sm);
+}
+
+/* Same surface as the form inputs elsewhere, because it is one: it reports a
+   value and changes it. The 2.75rem floor is the touch target. */
+.modeSelect {
+  min-height: 2.75rem;
+  padding: 0 var(--space-12);
+  font-family: inherit;
+  font-size: var(--text-sm);
+  color: var(--color-text-primary);
+  background: var(--color-surface-sunken);
+  border: var(--border-hairline) solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+}
+
+/* Dice en palabras lo que la opacidad insinúa: el logotipo que se ve atenuado
+   no está en la imagen todavía. Sin esta línea, medio tono se lee como "ahí
+   está, más clarito". */
+.ghostNote {
+  padding: var(--space-10) var(--space-12);
+  font-size: var(--text-xs);
+  line-height: 1.45;
+  color: var(--color-text-secondary);
+  background: var(--color-surface-sunken);
+  border-left: 2px solid var(--color-warning);
+  border-radius: var(--radius-sm);
+}

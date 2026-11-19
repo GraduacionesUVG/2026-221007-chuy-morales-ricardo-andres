@@ -1,0 +1,144 @@
+.page {
+  width: 100%;
+  padding: var(--space-24) var(--space-32);
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-16);
+  font-size: var(--text-sm);
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.back:hover {
+  text-decoration: underline;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-16);
+  margin-bottom: var(--space-16);
+}
+
+.identity {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.heading {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+}
+
+.title {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+/* Five facts in one line instead of a panel of stacked rows. It fits because
+   of Archivo's width axis: narrower text, not smaller. */
+.meta {
+  font-size: var(--text-sm);
+  font-stretch: var(--font-stretch-condensed);
+  color: var(--color-text-secondary);
+}
+
+/* Underlined rather than accent-coloured: inside a metadata line two accent
+   links would compete with the primary action a few centimetres to the right,
+   and the underline already says "clickable" without spending colour. */
+.metaLink {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--color-border-strong);
+  text-underline-offset: 2px;
+}
+
+.metaLink:hover {
+  color: var(--color-accent);
+  text-decoration-color: currentColor;
+}
+
+.metaFile {
+  font-family: var(--font-mono);
+}
+
+.actions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+/* The garment takes the whole width, with no panel beside it. */
+.stage {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  margin-bottom: var(--space-32);
+}
+
+/* Image surface: no border. The sunken ground is what frames it, and the
+   garment brings its own edge. */
+.canvas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 26rem;
+  padding: var(--space-24);
+  background: var(--color-surface-sunken);
+  border-radius: var(--radius-md);
+}
+
+/* El hilván: nothing has been chosen yet, so the surface is provisional. */
+.canvasIsEmpty {
+  background: var(--color-surface-base);
+  border: var(--border-provisional);
+}
+
+.canvasImage {
+  max-width: 100%;
+  /* Caps how tall it gets on a big monitor: full width is for the garment to
+     breathe, not to become a poster you have to scroll past. */
+  max-height: 60vh;
+  object-fit: contain;
+}
+
+.canvasEmpty {
+  padding: var(--space-32);
+  text-align: center;
+}
+
+.canvasEmptyTitle {
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.canvasEmptyHint {
+  margin-top: var(--space-4);
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+/* Caption of the garment above it, centred and measured: it describes what is
+   on screen, which is exactly what a field labelled "Notas" in a side panel
+   could not do. */
+.notes {
+  align-self: center;
+  max-width: 62ch;
+  text-align: center;
+  white-space: pre-wrap;
+  font-size: var(--text-sm);
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+}
